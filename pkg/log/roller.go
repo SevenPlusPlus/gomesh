@@ -18,11 +18,8 @@
 package log
 
 import (
-	"errors"
 	"io"
 	"path/filepath"
-	"strconv"
-
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -64,52 +61,6 @@ func (l Roller) GetLogWriter() io.Writer {
 	return lj
 }
 
-// IsLogRollerSubdirective is true if the subdirective is for the log roller.
-func IsLogRollerSubdirective(subdir string) bool {
-	return subdir == directiveRotateSize ||
-		subdir == directiveRotateAge ||
-		subdir == directiveRotateKeep ||
-		subdir == directiveRotateCompress
-}
-
-var errInvalidRollerParameter = errors.New("invalid roller parameter")
-
-// ParseRoller parses roller contents out of c.
-func ParseRoller(l *Roller, what string, where ...string) error {
-	if l == nil {
-		l = DefaultRoller()
-	}
-
-	// rotate_compress doesn't accept any parameters.
-	// others only accept one parameter
-	if (what == directiveRotateCompress && len(where) != 0) ||
-		(what != directiveRotateCompress && len(where) != 1) {
-		return errInvalidRollerParameter
-	}
-
-	var (
-		value int
-		err   error
-	)
-	if what != directiveRotateCompress {
-		value, err = strconv.Atoi(where[0])
-		if err != nil {
-			return err
-		}
-	}
-
-	switch what {
-	case directiveRotateSize:
-		l.MaxSize = value
-	case directiveRotateAge:
-		l.MaxAge = value
-	case directiveRotateKeep:
-		l.MaxBackups = value
-	case directiveRotateCompress:
-		l.Compress = true
-	}
-	return nil
-}
 
 // DefaultRoller will roll logs by default.
 func DefaultRoller() *Roller {
@@ -129,11 +80,6 @@ const (
 	defaultRotateAge = 14
 	// defaultRotateKeep is 10 files.
 	defaultRotateKeep = 10
-
-	directiveRotateSize     = "rotate_size"
-	directiveRotateAge      = "rotate_age"
-	directiveRotateKeep     = "rotate_keep"
-	directiveRotateCompress = "rotate_compress"
 )
 
 // lumberjacks maps log filenames to the logger

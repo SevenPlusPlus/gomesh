@@ -4,6 +4,8 @@ import (
 	"github.com/urfave/cli"
 	"os"
 	"time"
+	"github.com/SevenPlusPlus/gomesh/pkg/log"
+	"github.com/SevenPlusPlus/gomesh/cmd/mesh/subcmd"
 )
 
 var (
@@ -21,12 +23,13 @@ func main() {
 	app.Usage = "A simple archetype used to build a network related app."
 
 	app.Commands = []cli.Command{
-		cmdStart,
-		cmdStop,
+		subcmd.CmdStart,
+		subcmd.CmdStop,
 	}
 
 	app.Action = func(c *cli.Context)error {
 		cli.ShowAppHelp(c)
+		log.InitDefaultLogger("stdout", log.DEBUG)
 		c.App.Setup()
 		return nil
 	}
