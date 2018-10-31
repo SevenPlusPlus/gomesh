@@ -24,26 +24,37 @@ func (chat ChatMsg) MessageType() network.MsgType{
 
 type ChatMsgCodec struct{}
 
-func(codec *ChatMsgCodec)Serialize(obj interface{})([]byte, error) {
+func(codec ChatMsgCodec)Serialize(obj interface{})([]byte, error) {
 	chatMsg := obj.(ChatMsg)
 	return json.Marshal(chatMsg)
 }
 
-func(codec *ChatMsgCodec)Deserialize(data []byte)(interface{}, error) {
+func(codec ChatMsgCodec)Deserialize(data []byte)(interface{}, error) {
 	var chatMsg ChatMsg
 	err := json.Unmarshal(data, &chatMsg)
 	return chatMsg, err
 }
 
 type ChatRoomMsgHandler struct{
-	ChatMsgCodec
+	 ChatMsgCodec
 }
 
 func (ChatRoomMsgHandler) Handle(ctx context.Context, conn network.WriterCloser) {
-	log.DefaultLogger.Infof("Process room chat message\n")
+	log.DefaultLogger.Infof("Process room chat message.\n")
 	server := network.ServerFromContext(ctx)
 	if server != nil {
 		msg := network.MsgFromContext(ctx)
 		server.Broadcast(msg)
 	}
+}
+
+type ChatClientMsgHandler struct {
+	ChatMsgCodec
+}
+
+func (ChatClientMsgHandler) Handle(ctx context.Context, conn network.WriterCloser) {
+	log.DefaultLogger.Infof("Process client chat message.\n")
+	msg := network.MsgFromContext(ctx)
+	chatMsg := msg.(ChatMsg)
+	log.DefaultLogger.Infof("Got message %s from %s\n", chatMsg.Content, chatMsg.NickName)
 }

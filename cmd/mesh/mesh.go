@@ -24,6 +24,7 @@ func main() {
 
 	app.Commands = []cli.Command{
 		subcmd.CmdStart,
+		subcmd.CmdCli,
 		subcmd.CmdStop,
 	}
 

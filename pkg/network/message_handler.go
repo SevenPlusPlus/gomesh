@@ -11,7 +11,7 @@ type HandlerRegistry struct {
 	mux sync.Mutex
 }
 
-var msgHandlerRegistry HandlerRegistry
+var MsgHandlerRegistry HandlerRegistry
 
 type Handler interface {
 	Handle(context.Context, WriterCloser)
@@ -23,7 +23,7 @@ type MessageHandler interface {
 }
 
 func init() {
-	msgHandlerRegistry = HandlerRegistry{
+	MsgHandlerRegistry = HandlerRegistry{
 		handlerMap: make(map[MsgType]MessageHandler),
 	}
 }

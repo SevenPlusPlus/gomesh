@@ -214,7 +214,7 @@ func (cc *ClientConn) readLoop() {
 				return
 			}
 			cc.SetHeartBeat(time.Now().UnixNano())
-			handler := msgHandlerRegistry.GetMsgHandler(msg.MessageType())
+			handler := MsgHandlerRegistry.GetMsgHandler(msg.MessageType())
 			if handler == nil {
 				if onMessageCb != nil {
 					log.DefaultLogger.Infof("msg %d call onMessage()\n", msg.MessageType())

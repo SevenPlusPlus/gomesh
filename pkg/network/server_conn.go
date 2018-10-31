@@ -126,7 +126,7 @@ func (sc *ServerConn) ContextValue(k interface{}) interface{} {
 
 func (sc *ServerConn) Start() {
 	log.DefaultLogger.Infof("ServerConn starting, %v -> %v\n",
-		sc.LocalAddr(), sc.RemoteAddr())
+		sc.RemoteAddr(), sc.LocalAddr())
 	onConnectCb := sc.server.opts.onConnect
 	if onConnectCb != nil {
 		onConnectCb(sc)
@@ -233,7 +233,7 @@ func (sc *ServerConn) readLoop() {
 				return
 			}
 			sc.SetHeartBeat(time.Now().UnixNano())
-			handler := msgHandlerRegistry.GetMsgHandler(msg.MessageType())
+			handler := MsgHandlerRegistry.GetMsgHandler(msg.MessageType())
 			if handler == nil {
 				if onMessageCb != nil {
 					log.DefaultLogger.Infof("msg %d call onMessage()\n", msg.MessageType())

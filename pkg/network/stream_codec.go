@@ -34,7 +34,7 @@ func(codec TypeLengthValueCodec)Decode(raw net.Conn)(Message, error) {
 	if err := binary.Read(typeBuf, binary.LittleEndian, &msgType); err != nil {
 		return nil, err
 	}
-	msgCodec:= msgHandlerRegistry.GetMsgCodec(MsgType(msgType))
+	msgCodec:= MsgHandlerRegistry.GetMsgCodec(MsgType(msgType))
 	lengthBytes := make([]byte, MessageLenBytes)
 	if _, err := io.ReadFull(raw, lengthBytes); err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func(codec TypeLengthValueCodec)Decode(raw net.Conn)(Message, error) {
 }
 
 func(codec TypeLengthValueCodec)Encode(msg Message)([]byte, error) {
-	msgCodec := msgHandlerRegistry.GetMsgCodec(msg.MessageType())
+	msgCodec := MsgHandlerRegistry.GetMsgCodec(msg.MessageType())
 	data, err := msgCodec.Serialize(msg)
 	if err != nil {
 		return nil, err
