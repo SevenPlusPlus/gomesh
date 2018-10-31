@@ -26,8 +26,8 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"github.com/SevenPlusPlus/gomesh/pkg/types"
 	"github.com/hashicorp/go-syslog"
+	"github.com/SevenPlusPlus/gomesh/pkg/types"
 )
 
 // Log Instance
@@ -88,6 +88,13 @@ func InitDefaultLogger(output string, level Level) error {
 	return DefaultLogger.Start()
 }
 
+func NewCtxWithLogger(ctx context.Context, logger log.Logger)context.Context{
+	return context.WithValue(ctx, types.ContextKeyLogger, logger)
+}
+
+func LoggerFromContext(ctx context.Context) log.Logger {
+	return ctx.Value(types.ContextKeyLogger).(log.Logger)
+}
 // ByContext
 // Get default logger by context
 func ByContext(ctx context.Context) Logger {
