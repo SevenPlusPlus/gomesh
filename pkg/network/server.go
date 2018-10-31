@@ -8,10 +8,10 @@ import (
 	"github.com/SevenPlusPlus/gomesh/pkg/utils"
 	"time"
 	"crypto/rand"
-	"github.com/alipay/sofa-mosn/pkg/log"
 	"fmt"
 	"github.com/SevenPlusPlus/gomesh/pkg/types"
 	"os"
+	"github.com/SevenPlusPlus/gomesh/pkg/log"
 )
 
 const (

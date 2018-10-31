@@ -4,7 +4,7 @@ import (
 	"github.com/SevenPlusPlus/gomesh/pkg/network"
 	"encoding/json"
 	"golang.org/x/net/context"
-	"github.com/alipay/sofa-mosn/pkg/log"
+	"github.com/SevenPlusPlus/gomesh/pkg/log"
 )
 
 const (

@@ -1,9 +1,9 @@
 package network
 
 import (
-	"github.com/alipay/sofa-mosn/pkg/log"
 	"github.com/SevenPlusPlus/gomesh/pkg/types"
 	"github.com/SevenPlusPlus/gomesh/pkg/utils"
+	"github.com/SevenPlusPlus/gomesh/pkg/log"
 )
 
 type workerFunc func()

@@ -3,12 +3,12 @@ package chatroom
 import (
 	"github.com/SevenPlusPlus/gomesh/pkg/network"
 	"net"
-	"github.com/alipay/sofa-mosn/pkg/log"
 	"bufio"
 	"os"
 	"strings"
 	"time"
 	"fmt"
+	"github.com/SevenPlusPlus/gomesh/pkg/log"
 )
 
 type ChatClient struct {
